@@ -1,0 +1,44 @@
+class Solution {
+    public String longestPalindrome(String s) {
+        int i = 0;
+        int j = 0;
+        int z = 0;
+        int doubleFoul = 0;
+        int len = s.length();
+        // initial with the first character.
+        String ans = s == null || "".equals(s) ? "" : Character.toString(s.charAt(0)); 
+        
+        while (z < len - 1) {
+            if (z + 1 < len && s.charAt(z) == s.charAt(z+1)) {
+                ans = getLongerString(ans, getPalindrome(s, z, z+1));
+            }
+            if (z + 2 < len && s.charAt(z) == s.charAt(z+2)) {
+                ans = getLongerString(ans, getPalindrome(s, z, z+2));
+            }
+            
+            z++;
+        }
+        
+        return ans;
+        
+    }
+    
+    public String getLongerString(String s1, String s2) {
+        return (s2.length() > s1.length()) ? s2 : s1;
+    }
+    
+    public String getPalindrome(String s, int L, int R) {
+        String p = "";
+        while (L >= 0 && R < s.length()) {
+            if (s.charAt(L) == s.charAt(R)) {
+                p = s.substring(L, R + 1);                
+                L--;
+                R++;
+            } else {
+                break;
+            }
+        }
+        
+        return p;
+    }
+}
